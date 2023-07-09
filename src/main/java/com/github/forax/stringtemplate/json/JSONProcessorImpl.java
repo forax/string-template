@@ -163,7 +163,7 @@ record JSONProcessorImpl(MethodHandle jsonMH) implements JSONProcessor {
   }
 
   private static final class InliningCache extends MutableCallSite {
-    private static final MethodHandle IDENTITY_CHECK, RESOLVE_JSON, JSON_FALLBACK;
+    private static final MethodHandle IDENTITY_CHECK, RESOLVE_JSON, FALLBACK;
     static {
       var lookup = MethodHandles.lookup();
       try {
@@ -171,7 +171,7 @@ record JSONProcessorImpl(MethodHandle jsonMH) implements JSONProcessor {
             methodType(boolean.class, List.class, StringTemplate.class));
         RESOLVE_JSON = lookup.findStatic(JSONProcessorImpl.class, "resolveJSON",
             methodType(Object.class, Schema.class, StringTemplate.class));
-        JSON_FALLBACK = lookup.findVirtual(InliningCache.class, "jsonFallback",
+        FALLBACK = lookup.findVirtual(InliningCache.class, "fallback",
             methodType(MethodHandle.class, StringTemplate.class));
       } catch (NoSuchMethodException | IllegalAccessException e) {
         throw new AssertionError(e);
@@ -180,14 +180,14 @@ record JSONProcessorImpl(MethodHandle jsonMH) implements JSONProcessor {
 
     public InliningCache() {
       super(methodType(Object.class, StringTemplate.class));
-      setTarget(foldArguments(exactInvoker(type()), JSON_FALLBACK.bindTo(this)));
+      setTarget(foldArguments(exactInvoker(type()), FALLBACK.bindTo(this)));
     }
 
     private static boolean identityCheck(List<String> fragments, StringTemplate stringTemplate) {
       return stringTemplate.fragments() == fragments;
     }
 
-    private MethodHandle jsonFallback(StringTemplate stringTemplate) {
+    private MethodHandle fallback(StringTemplate stringTemplate) {
       var fragments = stringTemplate.fragments();
       var schema = createSchema(fragments, s -> resolveJSON(s, List.of()));
       MethodHandle target;
