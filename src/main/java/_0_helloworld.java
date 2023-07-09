@@ -1,7 +1,10 @@
 // $JAVA_HOME/bin/java --enable-preview -cp target/classes _0_helloworld
 void main() {
     var message = "string template";
-    System.out.println(STR."hello \{message} !");
+    //String s = STR."hello \{message} !";
+    //String s = STR.process(StringTemplate.of(List.of("hello ", " !"), List.of(message)));
+    String s = STR.process(StringTemplate.RAW."hello \{message} !");
+    System.out.println(s);
 }
 
 

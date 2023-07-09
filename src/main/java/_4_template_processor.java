@@ -1,4 +1,7 @@
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 // $JAVA_HOME/bin/java --enable-preview -cp target/classes _4_template_processor
 record PatternProcessor() implements StringTemplate.Processor<Pattern, RuntimeException> {
@@ -7,7 +10,7 @@ record PatternProcessor() implements StringTemplate.Processor<Pattern, RuntimeEx
     if (!stringTemplate.values().isEmpty()) {
       throw new IllegalStateException("no values allowed");
     }
-    var pattern = String.join("", stringTemplate.fragments());
+    var pattern = stringTemplate.fragments().stream().map(Pattern::quote).collect(joining(""));
     return Pattern.compile(pattern);
   }
 

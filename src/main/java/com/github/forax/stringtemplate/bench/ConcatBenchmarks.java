@@ -10,17 +10,16 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
-import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 // $JAVA_HOME/bin/java -jar target/benchmarks.jar -prof dtraceasm
-@Warmup(iterations = 5, time = 2, timeUnit = TimeUnit.SECONDS)
+/*@Warmup(iterations = 5, time = 2, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 5, time = 2, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 1, jvmArgs = { "--enable-preview" })
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Benchmark)
-public class Benchmarks {
+public class ConcatBenchmarks {
   @Benchmark
   public String concat() {
     var message = "string template";
@@ -59,4 +58,4 @@ public class Benchmarks {
     var message = "string template";
     return STR_BY_HAND."hello \{message} !";
   }
-}
+}*/
