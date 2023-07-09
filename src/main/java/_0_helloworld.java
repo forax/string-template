@@ -1,4 +1,4 @@
-// $JAVA_HOME/bin/java --enable-preview -cp target/classes _0_helloworld
+// $JAVA_HOME/bin/java --enable-preview -cp target/string-template-1.0-SNAPSHOT-jar-with-dependencies.jar _0_helloworld
 void main() {
     var message = "string template";
     //String s = STR."hello \{message} !";

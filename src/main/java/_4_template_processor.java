@@ -3,7 +3,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
-// $JAVA_HOME/bin/java --enable-preview -cp target/classes _4_template_processor
+// $JAVA_HOME/bin/java --enable-preview -cp target/string-template-1.0-SNAPSHOT-jar-with-dependencies.jar _4_template_processor
 record PatternProcessor() implements StringTemplate.Processor<Pattern, RuntimeException> {
   @Override
   public Pattern process(StringTemplate stringTemplate) {
