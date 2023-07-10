@@ -2,7 +2,7 @@ package com.github.forax.stringtemplate.log;
 
 import org.junit.jupiter.api.Test;
 
-import java.lang.System.Logger.Level;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.github.forax.stringtemplate.log.LoggerProcessor.LOGGER;
@@ -107,6 +107,33 @@ public class LoggerProcessorTest {
       return true;
     });
     logger.setLevel(java.util.logging.Level.WARNING);
+    Foo.test();
+    assertTrue(box.seen);
+  }
+
+  @Test
+  public void info() {
+    class Foo {
+      static void test() {
+        LOGGER.info()."hello";
+      }
+    }
+
+    var logger = Logger.getLogger(Foo.class.getName());
+    logger.setUseParentHandlers(false);
+    var box = new Object() { boolean seen; };
+    logger.setFilter(record -> {
+      assertAll(
+          () -> assertEquals(java.util.logging.Level.INFO, record.getLevel()),
+          () -> assertEquals(Foo.class.getName(), record.getLoggerName()),
+          () -> assertEquals("hello", record.getMessage()),
+          () -> assertEquals(Foo.class.getName(), record.getSourceClassName()),
+          () -> assertEquals("test", record.getSourceMethodName())
+      );
+      box.seen = true;
+      return true;
+    });
+    logger.setLevel(java.util.logging.Level.INFO);
     Foo.test();
     assertTrue(box.seen);
   }

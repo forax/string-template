@@ -147,7 +147,7 @@ public class JSONBenchmarks {
 
   final int age = 7;
 
-  @Benchmark
+  //@Benchmark
   public Object bare_non_constant() {
     return JSON."""
         {

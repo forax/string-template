@@ -1,7 +1,7 @@
 package com.github.forax.stringtemplate.log;
 
 import java.lang.StringTemplate.Processor;
-import java.lang.System.Logger.Level;
+import java.util.logging.Level;
 import java.lang.invoke.MethodHandle;
 import java.util.Objects;
 
@@ -50,7 +50,7 @@ record LoggerProcessorImpl(MethodHandle mh, Level level) implements LoggerProces
   }
   @Override
   public Processor<Void, RuntimeException> error() {
-    return createAsProcessor(mh, Level.ERROR);
+    return createAsProcessor(mh, Level.SEVERE);
   }
   @Override
   public Processor<Void, RuntimeException> warning() {
@@ -62,10 +62,10 @@ record LoggerProcessorImpl(MethodHandle mh, Level level) implements LoggerProces
   }
   @Override
   public Processor<Void, RuntimeException> debug() {
-    return createAsProcessor(mh, Level.DEBUG);
+    return createAsProcessor(mh, Level.FINE);
   }
   @Override
   public Processor<Void, RuntimeException> trace() {
-    return createAsProcessor(mh, Level.TRACE);
+    return createAsProcessor(mh, Level.FINER);
   }
 }

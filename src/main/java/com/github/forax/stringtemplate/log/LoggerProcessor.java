@@ -8,6 +8,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup.ClassOption;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.UndeclaredThrowableException;
+import java.util.logging.Level;
 
 import static java.lang.invoke.MethodHandles.Lookup.ClassOption.NESTMATE;
 import static java.lang.invoke.MethodHandles.Lookup.ClassOption.STRONG;
@@ -54,7 +55,7 @@ public interface LoggerProcessor {
     }
   }
 
-  Processor<Void, RuntimeException> level(System.Logger.Level level);
+  Processor<Void, RuntimeException> level(Level level);
 
   Processor<Void, RuntimeException> error();
   Processor<Void, RuntimeException> warning();
