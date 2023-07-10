@@ -17,14 +17,14 @@ import java.util.logging.Logger;
 import static com.github.forax.stringtemplate.log.LoggerProcessor.LOGGER;
 
 // Benchmark                                               Mode  Cnt   Score   Error  Units
-// LoggerBenchmarks.jul_concat_non_constant_message        avgt    5   4.801 ± 0.024  ns/op
-// LoggerBenchmarks.jul_constant_message                   avgt    5   0.847 ± 0.006  ns/op
-// LoggerBenchmarks.jul_lambda_non_constant_message        avgt    5   0.866 ± 0.004  ns/op
-// LoggerBenchmarks.jul_str_non_constant_message           avgt    5   4.555 ± 0.028  ns/op
-// LoggerBenchmarks.processor_constant_message             avgt    5   7.286 ± 0.005  ns/op
-// LoggerBenchmarks.processor_non_constant_message         avgt    5  12.643 ± 0.028  ns/op
-// LoggerBenchmarks.simple_processor_constant_message      avgt    5   5.692 ± 0.013  ns/op
-// LoggerBenchmarks.simple_processor_non_constant_message  avgt    5  11.001 ± 0.052  ns/op
+// LoggerBenchmarks.jul_concat_non_constant_message        avgt    5   4.801 ± 0.007  ns/op
+// LoggerBenchmarks.jul_constant_message                   avgt    5   0.854 ± 0.003  ns/op
+// LoggerBenchmarks.jul_lambda_non_constant_message        avgt    5   0.871 ± 0.021  ns/op
+// LoggerBenchmarks.jul_str_non_constant_message           avgt    5   4.542 ± 0.006  ns/op
+// LoggerBenchmarks.processor_constant_message             avgt    5   5.220 ± 0.007  ns/op
+// LoggerBenchmarks.processor_non_constant_message         avgt    5   6.566 ± 0.030  ns/op
+// LoggerBenchmarks.simple_processor_constant_message      avgt    5   5.687 ± 0.019  ns/op
+// LoggerBenchmarks.simple_processor_non_constant_message  avgt    5  10.957 ± 0.090  ns/op
 
 // $JAVA_HOME/bin/java -jar target/benchmarks.jar -prof dtraceasm
 @Warmup(iterations = 5, time = 2, timeUnit = TimeUnit.SECONDS)

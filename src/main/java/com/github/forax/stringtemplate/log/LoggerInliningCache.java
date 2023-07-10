@@ -10,20 +10,24 @@ import java.util.logging.Logger;
 import static java.lang.invoke.MethodHandles.exactInvoker;
 import static java.lang.invoke.MethodHandles.filterArguments;
 import static java.lang.invoke.MethodHandles.foldArguments;
+import static java.lang.invoke.MethodHandles.guardWithTest;
 import static java.lang.invoke.MethodType.methodType;
 
 final class LoggerInliningCache extends MutableCallSite {
-  static final MethodHandle IDENTITY_CHECK, LOG, FALLBACK;
+  static final MethodHandle FRAGMENT_CHECK, LEVEL_CHECK, LOG, EMPTY, FALLBACK;
 
   static {
     var lookup = MethodHandles.lookup();
     try {
-      IDENTITY_CHECK = lookup.findStatic(LoggerInliningCache.class, "identityCheck",
+      FRAGMENT_CHECK = lookup.findStatic(LoggerInliningCache.class, "fragmentCheck",
           methodType(boolean.class, List.class, Level.class, StringTemplate.class));
+      LEVEL_CHECK = lookup.findVirtual(Logger.class, "isLoggable",
+          methodType(boolean.class, Level.class));
       var log = lookup.findVirtual(Logger.class, "log",
           methodType(void.class, Level.class, String.class));
       var interpolate = lookup.findVirtual(StringTemplate.class, "interpolate", methodType(String.class));
       LOG = filterArguments(log, 2, interpolate);
+      EMPTY = MethodHandles.empty(methodType(void.class, Level.class, StringTemplate.class));
       FALLBACK = lookup.findVirtual(LoggerInliningCache.class, "fallback",
           methodType(MethodHandle.class, Level.class, StringTemplate.class));
     } catch (NoSuchMethodException | IllegalAccessException e) {
@@ -36,7 +40,7 @@ final class LoggerInliningCache extends MutableCallSite {
     setTarget(foldArguments(exactInvoker(type()), FALLBACK.bindTo(this)));
   }
 
-  private static boolean identityCheck(List<String> fragments, Level level, StringTemplate stringTemplate) {
+  private static boolean fragmentCheck(List<String> fragments, Level level, StringTemplate stringTemplate) {
     return stringTemplate.fragments() == fragments;
   }
 
@@ -51,10 +55,13 @@ final class LoggerInliningCache extends MutableCallSite {
     var logger = Logger.getLogger(callerName);
 
     var fragments = stringTemplate.fragments();
-    var target = LoggerInliningCache.LOG.bindTo(logger);
-    var gwt = MethodHandles.guardWithTest(
-        LoggerInliningCache.IDENTITY_CHECK.bindTo(fragments),
-        target,
+    var target = LOG.bindTo(logger);
+    var gwt = guardWithTest(
+        FRAGMENT_CHECK.bindTo(fragments),
+        guardWithTest(
+            LEVEL_CHECK.bindTo(logger),
+            target,
+            EMPTY),
         new LoggerInliningCache().dynamicInvoker()
     );
     setTarget(gwt);
