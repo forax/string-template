@@ -1,5 +1,5 @@
+import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
@@ -7,10 +7,10 @@ import static java.util.stream.Collectors.joining;
 record PatternProcessor() implements StringTemplate.Processor<Pattern, RuntimeException> {
   @Override
   public Pattern process(StringTemplate stringTemplate) {
-    if (!stringTemplate.values().isEmpty()) {
-      throw new IllegalStateException("no values allowed");
-    }
-    var pattern = stringTemplate.fragments().stream().map(Pattern::quote).collect(joining(""));
+    List<String> quoted = stringTemplate.values().stream()
+        .map(value -> Pattern.quote(value.toString()))
+        .toList();
+    String pattern = StringTemplate.interpolate(stringTemplate.fragments(), quoted);
     return Pattern.compile(pattern);
   }
 
@@ -18,8 +18,12 @@ record PatternProcessor() implements StringTemplate.Processor<Pattern, RuntimeEx
 }
 
 void main() {
-    Pattern pattern = PatternProcessor.PATTERN.".*";
+    String operator = "-";
+    Pattern pattern = PatternProcessor.PATTERN."\{ operator }|foo";
     System.out.println(pattern);
+
+    var matcher = pattern.matcher("-");
+    System.out.println("matches(\"-\")? " + matcher.matches());
 }
 
 

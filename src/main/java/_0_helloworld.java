@@ -1,16 +1,13 @@
 // $JAVA_HOME/bin/java --enable-preview -cp target/string-template-1.0-SNAPSHOT-jar-with-dependencies.jar _0_helloworld
 void main() {
-    var message = "string template";
-    //String s = STR."hello \{message} !";
-    //String s = STR.process(StringTemplate.of(List.of("hello ", " !"), List.of(message)));
-    String s = STR.process(StringTemplate.RAW."hello \{message} !");
-    System.out.println(s);
+    String value = "templated processor";
+    String result = STR."Hello \{ value } !";
 }
 
 
 // void main();
 //    Code:
-//       0: ldc           #7                  // String string template
+//       0: ldc           #7                  // String templated processor
 //       2: astore_1
 //       3: getstatic     #9                  // Field java/lang/System.out:Ljava/io/PrintStream;
 //       6: aload_1
