@@ -31,7 +31,7 @@ public interface LoggerProcessor {
       throw new UncheckedIOException(e);
     }
 
-    MethodHandle factory, fallback;
+    MethodHandle factory;
     try {
       var implLookup = lookup.defineHiddenClass(bytes, true, /*NESTMATE,*/ STRONG);
       var implClass = implLookup.lookupClass();
