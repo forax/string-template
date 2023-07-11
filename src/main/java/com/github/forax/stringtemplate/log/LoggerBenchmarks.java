@@ -89,39 +89,39 @@ public class LoggerBenchmarks {
     Foo.processor_logConstant();
   }
 
-  @Benchmark
+  //@Benchmark
   public void simple_processor_constant_message() {
     Foo.simple_processor_logConstant();
   }
 
-  @Benchmark
+  //@Benchmark
   public void jul_constant_message() {
     Foo.jul_logConstant();
   }
 
   private int value = 42;
 
-  @Benchmark
+  //@Benchmark
   public void processor_non_constant_message() {
     Foo.processor_logValue(value);
   }
 
-  @Benchmark
+  //@Benchmark
   public void simple_processor_non_constant_message() {
     Foo.simple_processor_logValue(value);
   }
 
-  @Benchmark
+  //@Benchmark
   public void jul_concat_non_constant_message() {
     Foo.jul_concat_logValue(value);
   }
 
-  @Benchmark
+  //@Benchmark
   public void jul_str_non_constant_message() {
     Foo.jul_str_logValue(value);
   }
 
-  @Benchmark
+  //@Benchmark
   public void jul_lambda_non_constant_message() {
     Foo.jul_lambda_logValue(value);
   }
