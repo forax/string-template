@@ -1,9 +1,9 @@
 # string-template
 Java 21 adds the concept of String template, this is a repository of examples and perf tests of this feature
 
-## JEP
+## JEP 438
 
-JEP 438 describes how the feature works
+The JEP 438 describes how the feature works
   https://openjdk.org/jeps/430
 
 Note: I think this JEP should be re-titled as "template processor" because the JEP is more than just string templating.
