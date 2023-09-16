@@ -13,7 +13,7 @@ import org.openjdk.jmh.annotations.Warmup;
 import java.util.concurrent.TimeUnit;
 
 // Benchmark                                                Mode  Cnt   Score   Error  Units
-// c.g.f.s.bench.ConcatBenchmarks.by_hand                   avgt    5  37.196 ± 0.159  ns/op
+// c.g.f.s.bench.ConcatBenchmarks.with_builder              avgt    5  37.196 ± 0.159  ns/op
 // c.g.f.s.bench.ConcatBenchmarks.concat                    avgt    5   5.042 ± 0.137  ns/op
 // c.g.f.s.bench.ConcatBenchmarks.with_STR                  avgt    5   5.037 ± 0.111  ns/op
 // c.g.f.s.bench.ConcatBenchmarks.with_interpolate          avgt    5  12.509 ± 0.049  ns/op
